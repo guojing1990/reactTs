@@ -24,6 +24,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+// const tsImportPluginFactory = require('ts-import-plugin')
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -289,6 +290,7 @@ module.exports = function(webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
+        '@': paths.appSrc,
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
@@ -343,6 +345,26 @@ module.exports = function(webpackEnv) {
           ],
           include: paths.appSrc,
         },
+        // {
+        //   test: /\.(jsx|tsx|js|ts)$/,
+        //   loader: 'ts-loader',
+        //   options: {
+        //     transpileOnly: true,
+        //     getCustomTransformers: () => ({
+        //       before: [tsImportPluginFactory(
+        //         {
+        //           libraryName: 'antd',
+        //           libraryDirectory: 'es',
+        //           style: "css"
+        //         }
+        //       )]
+        //     }),
+        //     compilerOptions: {
+        //       module: 'es2015'
+        //     }
+        //   },
+        //   exclude: /node_modules/
+        // },
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
