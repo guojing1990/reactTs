@@ -458,7 +458,7 @@ const MarkPaper: FC<MarkPaperProps> = () => {
               value={mouseMode}>
               <Radio value={0}>移动</Radio>
               <Radio value={1}>画笔</Radio>
-              <Radio value={2}>橡皮擦</Radio>
+              {/* <Radio value={2}>橡皮擦</Radio> */}
             </Radio.Group>
           </div>
           <div>
