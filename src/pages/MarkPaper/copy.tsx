@@ -72,7 +72,6 @@ const MarkPaper: FC<MarkPaperProps> = () => {
     const { current: canvas } = canvasRef
     const { current: translatePointX } = translatePointXRef
     const { current: translatePointY } = translatePointYRef
-    console.log(translatePointX, translatePointY)
     canvas && (canvas.style.transform = `scale(${canvasScale},${canvasScale}) translate(${translatePointX}px,${translatePointY}px)`)
   }, [canvasScale])
 
@@ -154,22 +153,14 @@ const MarkPaper: FC<MarkPaperProps> = () => {
     context.globalCompositeOperation = "source-over"
     context.beginPath()
     context.moveTo(pointX, pointY)
-    // let rectW: number = 0
-    // let rectH: number = 0 
+
     canvas.onmousemove = null
     canvas.onmousemove = (event: MouseEvent) => {
       const moveX: number = event.pageX - offsetLeft
       const moveY: number = event.pageY - offsetTop
-      const { pointX: pointW, pointY: pointH } = generateLinePoint(moveX, moveY)
-      // rectW = pointW-pointX
-      // rectH = pointH-pointY
-      context.lineTo(pointW, pointH)
+      const { pointX, pointY } = generateLinePoint(moveX, moveY)
+      context.lineTo(pointX, pointY)
       context.stroke()
-      // 框选---初步
-      // context.save()
-      // context.strokeRect(pointX, pointY, rectW, rectH)
-      // context.clearRect(pointX, pointY, rectW, rectH)
-      // context.restore()
     }
     canvas.onmouseup = () => {
       const imageData: ImageData = context.getImageData(0, 0, canvas.width, canvas.height)
@@ -460,7 +451,7 @@ const MarkPaper: FC<MarkPaperProps> = () => {
               onChange={handleLineWidthChange} />
           </div>
           <div>
-            工具选择：
+            模式选择：
             <Radio.Group
               className="radio-group"
               onChange={handleMouseModeChange}
